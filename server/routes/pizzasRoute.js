@@ -6,7 +6,7 @@ router.get('/all', async (req, res) => {
   try {
     const response = await Pizza.find({});
 
-    return res.status(200).json(response);
+    return res.status(200).send(response);
   } catch (error) {
     return res.status(400).send('something went wrong');
   }
