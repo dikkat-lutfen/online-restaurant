@@ -1,7 +1,18 @@
+import Navbar  from "./Components/Navbar.js"
+import  "../node_modules/bootstrap/dist/css/bootstrap.min.css"
+import "./App.css"
+import HomeScreen from "./Screens/HomeScreen.js";
+ 
+
+
+
+
 function App() {
   return (
     <div className="App">
-      <h1>online restaurant</h1>
+   
+      <Navbar/>
+      <HomeScreen/>
     </div>
   );
 }
