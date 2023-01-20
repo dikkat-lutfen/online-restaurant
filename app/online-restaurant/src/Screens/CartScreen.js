@@ -16,7 +16,7 @@ const CartScreen = () => {
               return (
                 <div
                   className="flex-container border-bottom align-items-center"
-                  key={id}
+                  key={`${id}${variant}`}
                 >
                   <div className=" w-100 m-2">
                     <h5>
