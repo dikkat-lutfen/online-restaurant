@@ -1,13 +1,22 @@
-import React from "react";
+import React from 'react';
+import { useCartContext } from '../context/cart_context';
+import { Link } from 'react-router-dom';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useNavigate } from 'react-router-dom';
 
+function Navbar() {
+  const { cart } = useCartContext();
+  const navigate = useNavigate();
 
- function Navbar() {
+  //get user name
+  const user = JSON.parse(localStorage.getItem('current-user'));
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg shadow-lg p-3 mb-5 bg-white rounded ">
-        <a className="navbar-brand" href="/">
+        <Link className="navbar-brand" to="/">
           ONLINE-PIZZA
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,16 +31,34 @@ import React from "react";
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ">
             <li className="nav-item">
-              <a className="nav-link" href="/">
-                Login 
-              </a>
+              {user ? (
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    {user.name}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => {
+                        localStorage.removeItem('current-user');
+                        navigate('/login');
+                      }}
+                    >
+                      Logout
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              ) : (
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              )}
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
-              Cart
-              </a>
+              <Link className="nav-link" to="/cart">
+                Cart {cart.length}
+              </Link>
             </li>
-         
           </ul>
         </div>
       </nav>
@@ -39,6 +66,4 @@ import React from "react";
   );
 }
 
-
 export default Navbar;
-

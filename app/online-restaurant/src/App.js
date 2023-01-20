@@ -1,18 +1,23 @@
-import Navbar  from "./Components/Navbar.js"
-import  "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import "./App.css"
-import HomeScreen from "./Screens/HomeScreen.js";
- 
-
-
-
+import Navbar from './Components/Navbar.js';
+import './App.css';
+import HomeScreen from './screens/HomeScreen';
+import CartScreen from './screens/CartScreen.js';
+import LoginScreen from './screens/LoginScreen.js';
+import RegisterScreen from './screens/RegisterScreen.js';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-   
-      <Navbar/>
-      <HomeScreen/>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="/cart" element={<CartScreen />} />
+          <Route exact path="/login" element={<LoginScreen />} />
+          <Route path="/register" element={<RegisterScreen />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

@@ -1,12 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
+import React from 'react';
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import { useCartContext } from '../context/cart_context';
 
 function Pizza({ pizza }) {
+  const { addToCart } = useCartContext();
   const quantityArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [quantity, setQuantity] = useState(1);
-  const [variant, setVariant] = useState("small");
-
+  const [variant, setVariant] = useState('small');
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -60,30 +61,34 @@ function Pizza({ pizza }) {
       <div className="flex-container">
         <div className="m-1 w-100">
           <h1 className="mt-2">
-            Price : {pizza.prices[0][variant] * quantity} €{" "}
+            Price : {pizza.prices[0][variant] * quantity} €{' '}
           </h1>
         </div>
         <div className="m-1 w-100">
-          <button className="btn">ADD TO CART</button>
+          <button
+            onClick={() => addToCart(pizza, pizza._id, +quantity, variant)}
+            className="btn"
+          >
+            ADD TO CART
+          </button>
         </div>
-     </div>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>{pizza.name}</Modal.Title>
-          </Modal.Header>
+      </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{pizza.name}</Modal.Title>
+        </Modal.Header>
 
-          <Modal.Body>
-            <img className="modalImage img-fluid"  src={pizza.image} alt="pizza"/>
-            <p>{pizza.description}</p>
-          </Modal.Body>
+        <Modal.Body>
+          <img className="modalImage img-fluid" src={pizza.image} alt="pizza" />
+          <p>{pizza.description}</p>
+        </Modal.Body>
 
-          <Modal.Footer>
-            <button className="btn" onClick={handleClose}>
-              CLOSE
-            </button>
-          </Modal.Footer>
-        </Modal>
-      
+        <Modal.Footer>
+          <button className="btn" onClick={handleClose}>
+            CLOSE
+          </button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }
