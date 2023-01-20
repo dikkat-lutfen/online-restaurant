@@ -3,6 +3,7 @@ import {
   CLEAR_CART,
   TOGGLE_CART_ITEM_AMOUNT,
   COUNT_CART_TOTALS,
+  REMOVE_CART_ITEM,
 } from '../actions/actions';
 
 const cart_reducer = (state, action) => {
@@ -22,6 +23,11 @@ const cart_reducer = (state, action) => {
           let newAmount = item.amount + amount;
           let newPrice = product.prices[0][variant] * newAmount;
 
+          /* if amount is greater than 10 dont let the amount be greater than 10 */
+          if (newAmount > 10) {
+            newAmount = 10;
+          }
+
           return { ...item, amount: newAmount, price: newPrice };
         } else {
           return item;
@@ -34,7 +40,8 @@ const cart_reducer = (state, action) => {
       const newItem = {
         amount,
         variant: variant,
-        price: product.prices[0][variant],
+        prices: product.prices,
+        price: product.prices[0][variant] * amount,
         id: id,
         name: product.name,
         image: product.image,
@@ -45,21 +52,29 @@ const cart_reducer = (state, action) => {
   }
 
   if (action.type === TOGGLE_CART_ITEM_AMOUNT) {
-    const { id, value } = action.payload;
+    const { product, value } = action.payload;
+    const { id, variant, prices } = product;
     /* make a temp array and depends the value add or remove from the 
     cart item amount  */
     const tempCart = state.cart
       .map((item) => {
-        if (item.id === id) {
+        if (item.id === id && item.variant === variant) {
           if (value === 'inc') {
             let newAmount = item.amount + 1;
+            let newPrice = prices[0][variant] * newAmount;
 
-            return { ...item, amount: newAmount };
+            /* if amount is greater than 10 dont let the amount be greater than 10 */
+            if (newAmount > 10) {
+              newAmount = 10;
+            }
+
+            return { ...item, amount: newAmount, price: newPrice };
           }
           if (value === 'dec') {
             let newAmount = item.amount - 1;
+            let newPrice = prices[0][variant] * newAmount;
 
-            return { ...item, amount: newAmount };
+            return { ...item, amount: newAmount, price: newPrice };
           }
         }
         return item;
@@ -69,24 +84,30 @@ const cart_reducer = (state, action) => {
     return { ...state, cart: tempCart };
   }
 
+  /* Delete cart item */
+  if (action.type === REMOVE_CART_ITEM) {
+    const tempCart = state.cart.filter((item) => item.id !== action.payload);
+
+    return { ...state, cart: tempCart };
+  }
+
   if (action.type === COUNT_CART_TOTALS) {
-    const { total_items, total_amount, total_vat } = state.cart.reduce(
+    const { total_items, total_amount } = state.cart.reduce(
       (total, cartItem) => {
-        const { amount, price } = cartItem;
+        const { amount, prices, variant } = cartItem;
         /* add the amount of items to total items */
         total.total_items += amount;
         /* get the total price */
-        total.total_amount += amount * price;
-        /* calculate the vat based the amount  */
-        total.total_vat = total.total_amount * state.vat;
+        total.total_amount += amount * prices[0][variant];
+
         /* return the total obj */
         return total;
       },
-      /* initial obj */
-      { total_items: 0, total_amount: 0, total_vat: 0 }
+      /* initial obj aka accumulator */
+      { total_items: 0, total_amount: 0 }
     );
     /* return the state from the deconstruction of the reducer */
-    return { ...state, total_items, total_amount, total_vat };
+    return { ...state, total_items, total_amount };
   }
 
   if (action.type === CLEAR_CART) {
