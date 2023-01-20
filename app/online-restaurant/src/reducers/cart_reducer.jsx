@@ -42,7 +42,7 @@ const cart_reducer = (state, action) => {
         variant: variant,
         prices: product.prices,
         price: product.prices[0][variant] * amount,
-        id: id,
+        id: `${id}${variant}`,
         name: product.name,
         image: product.image,
         category: product.category,
