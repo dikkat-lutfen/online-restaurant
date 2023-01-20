@@ -1,25 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const login = async () => {
+    setLoading(true);
     try {
       const user = {
         email,
         password,
       };
-      console.log(user);
       const response = await axios.post('api/users/login', user);
       localStorage.setItem('current-user', JSON.stringify(response.data));
-      alert(`Login Successful! Welcome back ${response.data.name}`);
+      setLoading(false);
     } catch (error) {
       const { data } = error.response;
-      alert(`${data}`);
+      console.log(data);
+      setLoading(false);
     }
   };
+
+  //if user exist at local storage navigate to the main page
+  useEffect(() => {
+    if (localStorage.getItem('current-user')) {
+      navigate('/');
+    }
+  }, [navigate, loading]);
 
   return (
     <div>
@@ -51,7 +62,9 @@ const RegisterScreen = () => {
               Login
             </button>
             <br />
-            <a style={{ color: 'black' }}>Click Here To Register</a>
+            <Link style={{ color: 'black' }} to="/register">
+              Click Here To Register
+            </Link>
           </div>
         </div>
       </div>

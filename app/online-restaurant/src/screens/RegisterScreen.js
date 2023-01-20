@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const RegisterScreen = () => {
@@ -7,11 +7,13 @@ const RegisterScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const register = async () => {
+    setLoading(true);
     try {
       if (password !== confirmPassword) {
-        alert('passwords not matching');
       } else {
         const user = {
           name,
@@ -21,13 +23,21 @@ const RegisterScreen = () => {
 
         const response = await axios.post('api/users/register', user);
         localStorage.setItem('current-user', JSON.stringify(response.data));
-        alert(`Registration Successful! Welcome ${response.data.name}`);
+        setLoading(false);
       }
     } catch (error) {
       const { data } = error.response;
-      alert(`${data}`);
+      console.log(data);
+      setLoading(false);
     }
   };
+
+  //if user exist at local storage navigate to the main page
+  useEffect(() => {
+    if (localStorage.getItem('current-user')) {
+      navigate('/');
+    }
+  }, [navigate, loading]);
 
   return (
     <div>
@@ -44,6 +54,7 @@ const RegisterScreen = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              name="name"
             />
             <input
               type="email"
@@ -52,17 +63,19 @@ const RegisterScreen = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              name="email"
             />
             <input
-              type="text"
+              type="password"
               placeholder="password"
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              name="password"
             />
             <input
-              type="text"
+              type="password"
               placeholder="confirm password"
               className="form-control"
               value={confirmPassword}
@@ -73,7 +86,9 @@ const RegisterScreen = () => {
               Register
             </button>
             <br />
-            <a style={{ color: 'black' }}>Click Here To Login</a>
+            <Link style={{ color: 'black' }} to="/login">
+              Click Here To Login
+            </Link>
           </div>
         </div>
       </div>
