@@ -1,18 +1,12 @@
-import Navbar  from "./Components/Navbar.js"
-import  "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import "./App.css"
-import HomeScreen from "./Screens/HomeScreen.js";
- 
-
-
-
+import Navbar from './Components/Navbar.js';
+import './App.css';
+import HomeScreen from './screens/HomeScreen';
 
 function App() {
   return (
     <div className="App">
-   
-      <Navbar/>
-      <HomeScreen/>
+      <Navbar />
+      <HomeScreen />
     </div>
   );
 }
