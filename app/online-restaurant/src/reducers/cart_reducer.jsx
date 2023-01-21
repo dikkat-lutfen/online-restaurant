@@ -42,7 +42,7 @@ const cart_reducer = (state, action) => {
         variant: variant,
         prices: product.prices,
         price: product.prices[0][variant] * amount,
-        id: `${id}${variant}`,
+        id: id,
         name: product.name,
         image: product.image,
         category: product.category,
@@ -86,8 +86,12 @@ const cart_reducer = (state, action) => {
 
   /* Delete cart item */
   if (action.type === REMOVE_CART_ITEM) {
-    const tempCart = state.cart.filter((item) => item.id !== action.payload);
-
+    /* if one of those two conditions are met then return a new array 
+    with the specific item removed  */
+    const tempCart = state.cart.filter(
+      (item) =>
+        item.variant !== action.payload.variant || item.id !== action.payload.id
+    );
     return { ...state, cart: tempCart };
   }
 

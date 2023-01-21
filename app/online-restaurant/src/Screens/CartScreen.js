@@ -47,7 +47,7 @@ const CartScreen = () => {
                     <i
                       className="fa fa-trash mx-2 text-danger"
                       aria-hidden="true"
-                      onClick={() => deleteCartItem(id)}
+                      onClick={() => deleteCartItem(id, variant)}
                     />
                   </div>
                 </div>
