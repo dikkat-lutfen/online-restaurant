@@ -34,8 +34,8 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { product, value } });
   };
 
-  const deleteCartItem = (id) => {
-    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  const deleteCartItem = (id, variant) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: { id, variant } });
   };
 
   const clearCart = () => {
