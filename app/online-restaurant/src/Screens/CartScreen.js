@@ -1,9 +1,31 @@
 import React from 'react';
 import { useCartContext } from '../context/cart_context';
+import axios from "axios";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
   const { cart, toggleAmount, deleteCartItem, total_items, total_amount } =
     useCartContext();
+
+
+  const navigate = useNavigate();
+  const [orderItems,setOrderItems]=useState([])
+  const [userId,setUserId]=useState("")
+
+function pay (){
+  console.log(cart)
+  setOrderItems(cart)
+  setUserId(cart[0].id)
+  console.log(orderItems)
+  axios.post("http://localhost:5000/api/order/createOrder",{ userId,orderItems })
+  .then(({data})=>{
+    console.log(data)
+   alert("ıt paid")
+  })
+  navigate('/orders');
+}
+
 
   return (
     <div>
@@ -61,7 +83,7 @@ const CartScreen = () => {
           <h2>Totals</h2>
           <h4>Total items : {total_items}</h4>
           <h4>Total price : {total_amount} €</h4>
-          <button className="btn">CheckOut</button>
+          <button   onClick={pay} className="btn">CheckOut</button>
         </div>
       </div>
     </div>

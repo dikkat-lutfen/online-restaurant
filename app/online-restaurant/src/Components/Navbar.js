@@ -41,11 +41,21 @@ function Navbar() {
                     <Dropdown.Item
                       onClick={() => {
                         localStorage.removeItem('current-user');
+                        navigate('/orders');
+                      }}
+                    >
+                      Stored Orders
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      onClick={() => {
+                        localStorage.removeItem('current-user');
                         navigate('/login');
                       }}
                     >
                       Logout
                     </Dropdown.Item>
+
+
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (
