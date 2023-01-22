@@ -46,6 +46,6 @@ select {
   width: 370px !important;
 }
 
-i {
-  cursor: pointer;
+.orderTitle {
+  font-size: 35px;
 }
