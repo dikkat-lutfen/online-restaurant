@@ -1,9 +1,21 @@
 import React from 'react';
 import { useCartContext } from '../context/cart_context';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
   const { cart, toggleAmount, deleteCartItem, total_items, total_amount } =
     useCartContext();
+
+  const setUserOrders = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('current-user'));
+      const order = { userId: user._id, orderItems: cart };
+      await axios.post('/api/orders/order', order);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -61,7 +73,9 @@ const CartScreen = () => {
           <h2>Totals</h2>
           <h4>Total items : {total_items}</h4>
           <h4>Total price : {total_amount} €</h4>
-          <button className="btn">CheckOut</button>
+          <button onClick={setUserOrders} className="btn">
+            CheckOut
+          </button>
         </div>
       </div>
     </div>
