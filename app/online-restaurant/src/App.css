@@ -1,56 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:wght@600&display=swap');
 
-
-
-body{
-    
-    font-family: 'Montserrat', sans-serif !important;
+body {
+  font-family: 'Montserrat', sans-serif !important;
 }
 
-.navbar-nav{
+.navbar-nav {
   margin-left: auto;
 }
-.nav-item{
-    color: black !important;
+.nav-item {
+  color: black !important;
 }
-.navbar-brand{
-    color:black;
-}
-
-h1{
-    font-size: 20px !important;
-}
-.img-fluid{
-    height: 200px;
-    width: 200px;
-   
-}
-.flex-container{
-    display: flex !important;
-}
-.btn{
-    background-color: red !important;
-    color: white !important;
-
-}
-.pizzaMain{
-   
-    text-align: center !important;
-    margin-top: 70px;
-    margin-left: 30px;
-    margin-right: 30px;
-    height: 400px;
-    width: 380px;
-    
-}
-select{
-    box-shadow: none !important;
-    border-color: black !important;
-   
+.navbar-brand {
+  color: black;
 }
 
-.modalImage{
-     height: 370px !important;
-     width: 370px !important;
+h1 {
+  font-size: 20px !important;
+}
+.img-fluid {
+  height: 200px;
+  width: 200px;
+}
+.flex-container {
+  display: flex !important;
+}
+.btn {
+  background-color: red !important;
+  color: white !important;
+}
+.pizzaMain {
+  text-align: center !important;
+  margin-top: 70px;
+  margin-left: 30px;
+  margin-right: 30px;
+  height: 400px;
+  width: 380px;
+}
+select {
+  box-shadow: none !important;
+  border-color: black !important;
+}
 
+.modalImage {
+  height: 370px !important;
+  width: 370px !important;
+}
+
+i {
+  cursor: pointer;
 }
