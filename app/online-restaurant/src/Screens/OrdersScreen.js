@@ -27,13 +27,13 @@ export default function OrdersScreen() {
       {data.map((order, i) => {
         const { orderItems, _id: id } = order;
         return (
-          <div key={id} class="row justify-content-center m-3 text-center">
+          <div key={id} className="row justify-content-center m-3 text-center">
             <div className="col-auto mt-3 ">
               <Table
                 striped
                 bordered
                 hover
-                class="table table-bordered table-striped "
+                className="table table-bordered table-striped "
               >
                 <thead>
                   <tr>
