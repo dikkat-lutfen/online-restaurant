@@ -38,6 +38,9 @@ function Navbar() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
+                    <Dropdown.Item onClick={() => navigate('/orders')}>
+                      Stored Orders
+                    </Dropdown.Item>
                     <Dropdown.Item
                       onClick={() => {
                         localStorage.removeItem('current-user');
