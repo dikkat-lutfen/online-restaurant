@@ -1,18 +1,31 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Pizza from '../Components/Pizza.js';
+import Loader from '../Components/Loader.js';
 
 function HomeScreen() {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getAllPizzas = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('/api/pizzas/all');
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/pizzas/all')
-      .then(({ data }) => {
-        setData(data);
-      })
-      .catch((error) => console.log(error));
+    getAllPizzas();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>
