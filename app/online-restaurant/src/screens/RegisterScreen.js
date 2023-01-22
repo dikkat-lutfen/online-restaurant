@@ -46,7 +46,7 @@ const RegisterScreen = () => {
           <h2 className="text-center m-2" style={{ fontSize: '35px' }}>
             Register
           </h2>
-          <div>
+          <form>
             <input
               type="text"
               placeholder="name"
@@ -82,14 +82,18 @@ const RegisterScreen = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
-            <button onClick={register} className="btn mt-3 mb-3 btn-primary">
+            <button
+              onClick={register}
+              className="btn mt-3 mb-3 btn-primary"
+              type="submit"
+            >
               Register
             </button>
             <br />
             <Link style={{ color: 'black' }} to="/login">
               Click Here To Login
             </Link>
-          </div>
+          </form>
         </div>
       </div>
     </div>
