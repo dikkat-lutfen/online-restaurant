@@ -12,25 +12,14 @@ function Navbar() {
   const user = JSON.parse(localStorage.getItem('current-user'));
 
   return (
-    <div>
-      <nav className="navbar navbar-expand-lg shadow-lg p-3 mb-5 bg-white rounded ">
+    <div className="w-100">
+      <nav className="navbar shadow-lg p-3 mb-5 bg-white rounded ">
         <Link className="navbar-brand" to="/">
           ONLINE-PIZZA
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ">
-            <li className="nav-item">
+        <div id="navbarNav">
+          <ul className="navbar-nav flex-row gap-3 align-items-center">
+            <li className="nav-item ">
               {user ? (
                 <Dropdown>
                   <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -38,12 +27,7 @@ function Navbar() {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        localStorage.removeItem('current-user');
-                        navigate('/orders');
-                      }}
-                    >
+                    <Dropdown.Item onClick={() => navigate('/orders')}>
                       Stored Orders
                     </Dropdown.Item>
                     <Dropdown.Item
@@ -54,8 +38,6 @@ function Navbar() {
                     >
                       Logout
                     </Dropdown.Item>
-
-
                   </Dropdown.Menu>
                 </Dropdown>
               ) : (

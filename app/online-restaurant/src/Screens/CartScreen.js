@@ -1,31 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCartContext } from '../context/cart_context';
-import axios from "axios";
-import { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const CartScreen = () => {
-  const { cart, toggleAmount, deleteCartItem, total_items, total_amount } =
-    useCartContext();
-
-
+  const {
+    cart,
+    toggleAmount,
+    deleteCartItem,
+    total_items,
+    total_amount,
+    clearCart,
+  } = useCartContext();
   const navigate = useNavigate();
-  const [orderItems,setOrderItems]=useState([])
-  const [userId,setUserId]=useState("")
+  const [success, setSuccess] = useState(false);
 
-function pay (){
-  console.log(cart)
-  setOrderItems(cart)
-  setUserId(cart[0].id)
-  console.log(orderItems)
-  axios.post("http://localhost:5000/api/order/createOrder",{ userId,orderItems })
-  .then(({data})=>{
-    console.log(data)
-   alert("ıt paid")
-  })
-  navigate('/orders');
-}
+  const setUserOrders = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem('current-user'));
+      const order = { userId: user._id, orderItems: cart };
+      await axios.post('/api/orders/order', order);
 
+      setSuccess(true);
+
+      setTimeout(() => {
+        setSuccess(false);
+        navigate('/');
+        clearCart();
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -83,7 +89,19 @@ function pay (){
           <h2>Totals</h2>
           <h4>Total items : {total_items}</h4>
           <h4>Total price : {total_amount} €</h4>
-          <button   onClick={pay} className="btn">CheckOut</button>
+          {success ? (
+            <div className="p-3 mb-2 bg-success text-white my-3">
+              <h4>Your order has been placed</h4>
+            </div>
+          ) : null}
+
+          <button
+            onClick={setUserOrders}
+            className="btn mt-2"
+            disabled={cart.length ? false : true}
+          >
+            CheckOut
+          </button>
         </div>
       </div>
     </div>
