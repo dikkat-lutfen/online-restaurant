@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Bigelow+Rules&family=Montserrat:wght@600&display=swap');
+html,
+body {
+  overflow-x: hidden;
+}
+
+* {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+.navbar-nav {
+  margin-left: auto;
+}
+.nav-item {
+  color: black !important;
+}
+.navbar-brand {
+  color: black;
+}
+
+h1 {
+  font-size: 20px !important;
+}
+.img-fluid {
+  height: 200px;
+  width: 200px;
+}
+.flex-container {
+  display: flex !important;
+}
+.btn {
+  background-color: red !important;
+  color: white !important;
+}
+.pizzaMain {
+  text-align: center !important;
+  margin-top: 70px;
+  margin-left: 30px;
+  margin-right: 30px;
+  height: 400px;
+  width: 380px;
+}
+select {
+  box-shadow: none !important;
+  border-color: black !important;
+}
+
+.modalImage {
+  height: 370px !important;
+  width: 370px !important;
+}
+
+.orderTitle {
+  font-size: 35px;
+}
+
+input {
+  margin-top: 10px !important;
+}
+
+i {
+  cursor: pointer;
+}
+
+table {
+  table-layout: fixed;
+}
+
+.loader {
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+}
